@@ -6,6 +6,13 @@ XCOM: Enemy Unknown does not properly handle mouse coordinates at certain aspect
 
 This fix provides resolution-specific patched executables for both the **Steam** and **GOG** versions of XCOM: Enemy Unknown.
 
+## Download
+
+Download the latest release for Steam or GOG from the
+[Releases page](https://github.com/TimColaneri/XCOM-EU-Ultrawide-Fix/releases/latest).
+
+Be sure to download the package that matches your version of the game.
+
 ## Supported Resolutions
 
 | Resolution | Aspect Ratio | ConstrainedAspectRatio |
