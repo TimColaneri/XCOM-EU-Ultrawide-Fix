@@ -4,232 +4,274 @@ An unofficial ultrawide resolution fix for **XCOM: Enemy Unknown** that corrects
 
 XCOM: Enemy Unknown does not properly handle mouse coordinates at certain aspect ratios. The game can render across the entire display while calculating mouse positions using a different aspect ratio, causing the visible cursor position and the location where the game registers clicks to become misaligned.
 
-This fix provides resolution-specific patched executables that correct this behavior.
+This fix provides resolution-specific patched executables for both the **Steam** and **GOG** versions of XCOM: Enemy Unknown.
 
 ## Supported Resolutions
 
-| Resolution | ConstrainedAspectRatio |
-| ---------- | ---------------------: |
-| 2560×1080  |              `2.37037` |
-| 3440×1440  |              `2.38889` |
-| 3840×1600  |              `2.40000` |
-| 5120×1440  |              `3.55556` |
+| Resolution | Aspect Ratio | ConstrainedAspectRatio |
+| ---------- | -----------: | ---------------------: |
+| 2560×1080  |         21:9 |              `2.37037` |
+| 3440×1440  |         21:9 |              `2.38889` |
+| 3840×1600  |        24:10 |              `2.40000` |
+| 5120×1440  |         32:9 |              `3.55556` |
 
-Each resolution requires its corresponding patched executable.
+Each resolution requires its corresponding patched executable and `ConstrainedAspectRatio` setting.
+
+## Compatibility and Testing
+
+The current release includes separate packages for the **Steam** and **GOG** versions of XCOM: Enemy Unknown.
+
+| Version | Resolution | Status                                 |
+| ------- | ---------: | -------------------------------------- |
+| Steam   |  2560×1080 | ✅ Confirmed working                    |
+| Steam   |  3440×1440 | Generated, awaiting additional testing |
+| Steam   |  3840×1600 | Generated, awaiting additional testing |
+| Steam   |  5120×1440 | Generated, awaiting additional testing |
+| GOG     |  2560×1080 | Generated, awaiting additional testing |
+| GOG     |  3440×1440 | ✅ Confirmed working                    |
+| GOG     |  3840×1600 | Generated, awaiting additional testing |
+| GOG     |  5120×1440 | Generated, awaiting additional testing |
+
+**Steam 2560×1080** has been tested and confirmed working by the project author.
+
+**GOG 3440×1440** has been tested and confirmed working with help from the community.
+
+The remaining executables were generated using the same patching method and resolution-dependent calculation, but have not yet been independently tested in-game.
+
+If you successfully test one of these combinations, please consider opening an issue or discussion with your results so its status can be updated.
 
 ---
 
 # Installation
 
-## 1. Locate XComGame.exe
+## 1. Download the Correct Package
 
-For a standard Steam installation, the executable is located at:
+Go to the **Releases** section of this repository and download the package corresponding to your version of the game:
 
-```text
-C:\Program Files (x86)\Steam\steamapps\common\XCom-Enemy-Unknown\Binaries\Win32\XComGame.exe
-```
+### Steam
+
+`XCOM_EU_Ultrawide_Fix_Steam.zip`
+
+### GOG
+
+`XCOM_EU_Ultrawide_Fix_GOG.zip`
+
+**Do not mix the Steam and GOG executables.**
+
+The Steam and GOG releases of the game use different executables. A Steam executable should only be used with the Steam version of the game, and a GOG executable should only be used with the GOG version.
+
+Each package contains patched executables for:
+
+* 2560×1080
+* 3440×1440
+* 3840×1600
+* 5120×1440
+
+Choose the executable matching the resolution you intend to use.
+
+---
+
+## 2. Locate XComGame.exe
+
+The file that must be replaced is:
+
+`XComGame.exe`
+
+### Steam
+
+For a standard Steam installation, it is normally located at:
+
+`C:\Program Files (x86)\Steam\steamapps\common\XCom-Enemy-Unknown\Binaries\Win32\XComGame.exe`
 
 If your Steam library is installed somewhere else, the beginning of this path will be different.
 
-The important part is:
+To find the installation through Steam:
 
-```text
-steamapps\common\XCom-Enemy-Unknown\Binaries\Win32\XComGame.exe
-```
-
-### Easy way to find the folder through Steam
-
-If you aren't sure where XCOM is installed:
-
-1. Open **Steam**.
-2. Go to your **Library**.
+1. Open Steam.
+2. Go to your Library.
 3. Right-click **XCOM: Enemy Unknown**.
 4. Select **Properties**.
 5. Select **Installed Files**.
 6. Click **Browse**.
+7. Open `Binaries\Win32`.
 
-This will open the XCOM installation directory.
+### GOG
 
-From there, open:
+The GOG installation directory depends on where you chose to install the game.
 
-```text
-Binaries
-└── Win32
-    └── XComGame.exe
-```
+Locate your XCOM: Enemy Unknown installation and open:
 
-## 2. Back Up XComGame.exe
+`Binaries\Win32`
 
-**Before replacing anything, make a backup of your original `XComGame.exe`.**
+Inside you should find:
 
-For example, rename it:
-
-```text
-XComGame_original.exe
-```
-
-or copy it somewhere outside the game directory.
-
-This makes it easy to restore the original game if something goes wrong.
-
-## 3. Install the Patched Executable
-
-Open the folder in this package corresponding to your desired resolution.
-
-For example:
-
-```text
-2560x1080\
-3440x1440\
-3840x1600\
-5120x1440\
-```
-
-Inside the appropriate folder, locate the patched:
-
-```text
-XComGame.exe
-```
-
-Copy it to:
-
-```text
-...\XCom-Enemy-Unknown\Binaries\Win32\
-```
-
-and replace the original `XComGame.exe`.
-
-**Make sure you use the executable that matches the resolution you intend to play at.**
-
-For example, if you are playing at **2560×1080**, use the `XComGame.exe` from the `2560x1080` folder.
+`XComGame.exe`
 
 ---
 
-# Configure the Aspect Ratio
+## 3. Back Up the Original Executable
 
-The patched executable is only one part of the fix.
+**Do not skip this step.**
 
-You must also configure XCOM to use the correct aspect ratio for your resolution.
+Before replacing anything, make a backup of your original:
 
-## 4. Locate XComCamera.ini
+`XComGame.exe`
 
-The configuration file is normally located in your Windows Documents folder:
+For example, rename it:
 
-```text
-C:\Users\<YOUR USERNAME>\Documents\My Games\XCOM - Enemy Unknown\XComGame\Config\XComCamera.ini
-```
+`XComGame_original.exe`
 
-A quick way to get there is to press **Windows Key + R** and enter:
+or copy it somewhere outside the game directory.
 
-```text
-%USERPROFILE%\Documents\My Games\XCOM - Enemy Unknown\XComGame\Config
-```
+Keep the original executable from your own version of the game.
 
-Press **Enter**.
+Steam and GOG executables are not interchangeable.
 
-You should see:
+---
 
-```text
-XComCamera.ini
-```
+## 4. Install the Patched Executable
 
-If your Documents folder is managed by OneDrive, the location may instead resemble:
+Extract the ZIP for your version of the game.
 
-```text
-C:\Users\<YOUR USERNAME>\OneDrive\Documents\My Games\XCOM - Enemy Unknown\XComGame\Config\XComCamera.ini
-```
+Inside are separate executables for each supported resolution.
 
-**Do not edit the similarly named default configuration files inside the Steam installation directory.** The configuration used for this setting is the copy under your Documents/My Games folder.
+For example, a Steam user running at 2560×1080 would select:
 
-## 5. Back Up XComCamera.ini
+`XComGame_Steam_2560x1080.exe`
 
-Before editing it, make a copy of:
+A GOG user running at 3440×1440 would select:
 
-```text
-XComCamera.ini
-```
+`XComGame_GOG_3440x1440.exe`
+
+Rename the selected executable to:
+
+`XComGame.exe`
+
+Copy it into the game's:
+
+`Binaries\Win32`
+
+directory and replace the original executable.
+
+Make sure you have selected both the correct:
+
+* Game version: **Steam or GOG**
+* Screen resolution
+
+---
+
+# Configure XComCamera.ini
+
+Replacing the executable is only one part of the fix.
+
+XCOM must also be configured to use the aspect ratio corresponding to your resolution.
+
+## 5. Locate XComCamera.ini
+
+The configuration file is normally located at:
+
+`%USERPROFILE%\Documents\My Games\XCOM - Enemy Unknown\XComGame\Config\XComCamera.ini`
+
+An easy way to get there is to press:
+
+**Windows Key + R**
+
+and enter:
+
+`%USERPROFILE%\Documents\My Games\XCOM - Enemy Unknown\XComGame\Config`
+
+If your Documents folder is managed by OneDrive, also check:
+
+`%USERPROFILE%\OneDrive\Documents\My Games\XCOM - Enemy Unknown\XComGame\Config`
+
+Do not edit the similarly named default configuration files inside the game's installation directory.
+
+If the configuration directory does not exist yet, launch XCOM: Enemy Unknown at least once so the game can create it.
+
+---
+
+## 6. Back Up XComCamera.ini
+
+Before editing the configuration, make a copy of:
+
+`XComCamera.ini`
 
 For example:
 
-```text
-XComCamera_backup.ini
-```
+`XComCamera_backup.ini`
 
-## 6. Edit ConstrainedAspectRatio
+---
 
-Open `XComCamera.ini` using Notepad or another text editor.
+## 7. Set ConstrainedAspectRatio
 
-Look for the `[Engine.Camera]` section and the following settings:
+Open `XComCamera.ini` in Notepad or another text editor.
+
+Find the:
+
+`[Engine.Camera]`
+
+section.
+
+It should contain settings similar to:
 
 ```ini
 [Engine.Camera]
 DefaultAspectRatio=1.778
 bConstrainAspectRatio=true
-ConstrainedAspectRatio=
+ConstrainedAspectRatio=1.778
 ```
 
-Set `ConstrainedAspectRatio` to the value corresponding to your resolution.
-
-### 2560×1080
+Make sure:
 
 ```ini
-ConstrainedAspectRatio=2.37037
+bConstrainAspectRatio=true
 ```
 
-### 3440×1440
+Then change `ConstrainedAspectRatio` to the value corresponding to your resolution:
 
-```ini
-ConstrainedAspectRatio=2.38889
-```
+| Resolution | Setting                          |
+| ---------- | -------------------------------- |
+| 2560×1080  | `ConstrainedAspectRatio=2.37037` |
+| 3440×1440  | `ConstrainedAspectRatio=2.38889` |
+| 3840×1600  | `ConstrainedAspectRatio=2.40000` |
+| 5120×1440  | `ConstrainedAspectRatio=3.55556` |
 
-### 3840×1600
+The value is calculated from:
 
-```ini
-ConstrainedAspectRatio=2.40000
-```
-
-### 5120×1440
-
-```ini
-ConstrainedAspectRatio=3.55556
-```
-
-The value is simply:
-
-```text
-Screen Width ÷ Screen Height
-```
+`Screen Width ÷ Screen Height`
 
 For example:
 
-```text
-2560 ÷ 1080 = 2.37037
-5120 ÷ 1440 = 3.55556
-```
+`2560 ÷ 1080 = 2.37037`
+
+and:
+
+`5120 ÷ 1440 = 3.55556`
 
 Save `XComCamera.ini` after making the change.
 
 ---
 
-# 7. Launch the Game
+# 8. Launch the Game
 
 Launch **XCOM: Enemy Unknown** normally.
 
 Set the game's resolution to the same resolution as the patched executable you installed.
 
-For example:
+For example, a Steam 2560×1080 installation should use:
 
 ```text
-2560×1080 patched XComGame.exe
-        +
+XComGame_Steam_2560x1080.exe
+renamed to XComGame.exe
+
 ConstrainedAspectRatio=2.37037
-        +
-Game resolution set to 2560×1080
+
+Game resolution: 2560×1080
 ```
 
-All three should match.
+These settings must correspond to one another.
 
-The mouse cursor should now correctly correspond to the location where the game registers clicks.
+The mouse cursor should now line up correctly with the location where the game registers clicks.
 
 ---
 
@@ -237,15 +279,48 @@ The mouse cursor should now correctly correspond to the location where the game 
 
 At unsupported widescreen and ultrawide aspect ratios, XCOM: Enemy Unknown can incorrectly calculate mouse coordinates.
 
-This can result in problems such as:
+This can cause:
 
-* Buttons responding when the cursor is positioned beside them
-* Increasing mouse offset toward the edges of the screen
+* Buttons to respond when the cursor is positioned beside them
+* Mouse offset that becomes increasingly severe toward the edges of the screen
 * Difficulty selecting UI elements
 * Incorrect mouse interaction during tactical gameplay
 * Severe cursor misalignment at very wide aspect ratios
 
-The resolution-specific executable patches correct the game's mouse-coordinate calculations for the selected resolution.
+The resolution-specific executable patches modify the game's mouse-coordinate scaling so it corresponds to the selected resolution.
+
+---
+
+# Technical Details
+
+The original executable uses a horizontal mouse-coordinate scale based on a width of 1280 pixels.
+
+The original scale is:
+
+`1 / 1280 = 0.00078125`
+
+The ultrawide fix replaces this with a resolution-dependent scale calculated as:
+
+`height / (720 × width)`
+
+which is equivalent to:
+
+`1 / (720 × aspect ratio)`
+
+The patch changes three four-byte locations in `XComGame.exe`.
+
+Two locations redirect existing `mulss` instructions to a new scale value, while the third location stores the new 32-bit floating-point scale.
+
+The same patch locations are present in the supported Steam and GOG executables. The scale value itself changes depending on the selected resolution.
+
+| Resolution | Float Bytes   |
+| ---------- | ------------- |
+| 2560×1080  | `9A 99 19 3A` |
+| 3440×1440  | `C8 68 18 3A` |
+| 3840×1600  | `26 B4 17 3A` |
+| 5120×1440  | `CD CC CC 39` |
+
+The values above are stored as little-endian IEEE-754 32-bit floating-point values.
 
 ---
 
@@ -253,69 +328,43 @@ The resolution-specific executable patches correct the game's mouse-coordinate c
 
 ## The mouse is still offset
 
-Make sure all three settings match:
+Make sure all three of these match:
 
 1. The resolution of the patched `XComGame.exe`
 2. The `ConstrainedAspectRatio` value in `XComCamera.ini`
-3. The resolution selected in XCOM
+3. The resolution selected inside XCOM
 
-For example, a 2560×1080 setup should use:
+Also make sure you installed the correct **Steam or GOG** executable.
 
-```text
-Patched executable:     2560×1080 version
-Game resolution:       2560×1080
-ConstrainedAspectRatio: 2.37037
-```
+---
 
-## I can't find XComGame.exe
+## The game asks for steam_api.dll
 
-For Steam, right-click the game and select:
+If you own the GOG version and receive an error involving:
 
-```text
-Properties → Installed Files → Browse
-```
+`steam_api.dll`
 
-Then navigate to:
+you most likely installed the **Steam executable**.
 
-```text
-Binaries\Win32\
-```
+Restore your original GOG `XComGame.exe` and install the corresponding executable from the GOG package instead.
 
-The full default Steam path is:
+---
 
-```text
-C:\Program Files (x86)\Steam\steamapps\common\XCom-Enemy-Unknown\Binaries\Win32\XComGame.exe
-```
+## The game crashes or does not start
 
-## I can't find XComCamera.ini
+Restore your original `XComGame.exe` backup.
 
-Check:
+Double-check that you selected the correct Steam/GOG package and the correct resolution.
 
-```text
-%USERPROFILE%\Documents\My Games\XCOM - Enemy Unknown\XComGame\Config\
-```
+### Steam
 
-If you use OneDrive for your Documents folder, also check:
+Steam users can restore the original executable using **Verify integrity of game files**.
 
-```text
-%USERPROFILE%\OneDrive\Documents\My Games\XCOM - Enemy Unknown\XComGame\Config\
-```
+Keep in mind that verifying the game files will replace the patched executable.
 
-If the configuration folder hasn't been created yet, launch the game at least once and then check again.
+### GOG
 
-## The game crashes or doesn't start
-
-Restore your backup of the original:
-
-```text
-XComGame.exe
-```
-
-The patched executable may not be compatible with every version or distribution of the game.
-
-You can also use Steam's **Verify integrity of game files** feature to restore the original executable.
-
-**Note:** Verifying the game files will replace the patched executable, so the fix will need to be installed again afterward.
+GOG users should restore the original executable from their own backup or installation.
 
 ---
 
@@ -327,31 +376,41 @@ To completely remove the fix:
 2. Restore your original `XComGame.exe`.
 3. Restore your backup of `XComCamera.ini`, or change `ConstrainedAspectRatio` back to its previous value.
 
-If you no longer have your original executable, use Steam's file verification feature to restore it.
+---
+
+# XCOM: Enemy Unknown vs. Enemy Within
+
+This fix is specifically for:
+
+**XCOM: Enemy Unknown**
+
+Enemy Unknown uses:
+
+`XComGame.exe`
+
+Enemy Within uses:
+
+`XComEW.exe`
+
+**Do not replace `XComEW.exe` with these files.**
+
+Enemy Within is not currently supported by this fix.
 
 ---
 
-# Compatibility
+# Contributing and Testing
 
-This fix is intended for:
+Additional testing is welcome, particularly for the resolution/version combinations that have not yet been independently confirmed.
 
-**XCOM: Enemy Unknown — Windows / Steam**
+If you test one of these versions successfully, please include:
 
-The Enemy Unknown executable is:
+* Steam or GOG
+* Resolution
+* Whether the game launches normally
+* Whether menu/UI mouse alignment is correct
+* Whether tactical mouse interaction works correctly
 
-```text
-XComGame.exe
-```
-
-This should not be confused with the **Enemy Within** executable, which is:
-
-```text
-XComEW.exe
-```
-
-This package was created for **Enemy Unknown**.
-
-Compatibility with every executable version, storefront, or modification is not guaranteed.
+Bug reports and additional information can be submitted through the repository's Issues section.
 
 ---
 
@@ -359,27 +418,23 @@ Compatibility with every executable version, storefront, or modification is not 
 
 Created by **Tim Colaneri**.
 
-This fix was created to make XCOM: Enemy Unknown properly playable at modern ultrawide and super-ultrawide resolutions.
+Special thanks to the community members who helped add and verify GOG support:
+
+* **tarnishedmoth** for reporting the original GOG compatibility issue and providing information about the problem at 3440×1440.
+* **naqimirza-glitch** for helping develop and test the GOG 3440×1440 fix and providing the original and working patched GOG executables used to verify the patch.
+
+Their contributions made it possible to identify the differences between the Steam and GOG releases and add separate GOG-compatible files to the project.
+
+ChatGPT assisted with reverse-engineering analysis, comparison and verification of the executable changes, deriving the multi-resolution patching method, and development of supporting tools and documentation.
 
 ---
 
 # Disclaimer
 
-This is an unofficial community-created modification and is not affiliated with, sponsored by, or endorsed by Firaxis Games, 2K, or any other party associated with XCOM.
+This is an unofficial community-created modification and is not affiliated with, sponsored by, or endorsed by Firaxis Games, 2K, GOG, Valve, or any other party associated with XCOM.
 
 XCOM and related names and trademarks belong to their respective owners.
 
 Always back up your original game files before installing modifications.
 
 Use this modification at your own risk.
-
-
-Restore the backup copy of your original XComGame.exe.
-
-If you no longer have the original executable, use your game launcher's file-verification feature to restore it.
-
-Disclaimer
-
-This is an unofficial community fix and is not affiliated with or endorsed by Firaxis Games, 2K, or the XCOM developers or publishers.
-
-Use these files at your own risk. Always keep a backup of your original game files.
